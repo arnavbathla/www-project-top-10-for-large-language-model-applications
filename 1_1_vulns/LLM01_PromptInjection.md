@@ -11,6 +11,45 @@ The results of a successful prompt injection attack can vary greatly - from soli
 
 In advanced attacks, the LLM could be manipulated to mimic a harmful persona or interact with plugins in the user's setting. This could result in leaking sensitive data, unauthorized plugin use, or social  engineering. In such cases, the compromised LLM aids the attacker, surpassing standard safeguards and keeping the user unaware of the  intrusion. In these instances, the compromised LLM effectively acts as an agent for the attacker, furthering their objectives without triggering usual safeguards or alerting the end user to the intrusion.
 
+### Technical Deep Dive
+
+This section delves into the technical specifics of how prompt injections exploit the fundamental design and operational protocols of LLMs, and why they pose a significant threat to security and privacy.
+
+#### Understanding LLM Operational Dynamics
+
+At the core of LLMs lies a sequence-to-sequence architecture that processes a series of input tokens (words, phrases, or other data units) and generates an output sequence based on the learned patterns from a vast dataset. The model's design to consider context and generate human-like responses makes it inherently vulnerable to context manipulation through prompt injections.
+
+#### Exploitation Mechanisms
+
+Prompt injection attacks take advantage of two critical aspects of LLMs:
+
+1. **Context Sensitivity**: LLMs are highly sensitive to the input context, which can be manipulated to alter output generation significantly. A well-crafted injection can change the model's 'state of mind,' causing it to output information or perform actions in line with the attacker's intent.
+
+2. **Sequence Completion**: LLMs aim to provide a coherent and contextually relevant completion of the input sequence. Attackers craft inputs that compel the model to complete the sequence in a way that serves their malicious purposes, often including commands or triggers that the LLM is conditioned to follow.
+
+#### Attack Vectors
+
+The complexity of prompt injection attacks can range from simple command-like injections to sophisticated prompts that subtly alter the LLM's behavior. They can be classified into:
+
+1. **Syntax Exploits**: Taking advantage of the LLM's parsing logic by inserting symbols or command sequences that are interpreted in a particular way by the model.
+
+2. **Semantic Exploits**: Crafting inputs that change the meaning of the prompt in a way that is not immediately apparent, leveraging the model's language understanding capabilities.
+
+3. **Contextual Exploits**: Utilizing the LLM's context-based generation by embedding prompts in a larger body of text that seems benign but is designed to trigger a specific response.
+
+#### Technical Defenses
+
+While the non-discriminatory processing of natural language inputs makes LLMs powerful, it also opens them up to these vulnerabilities. Defending against prompt injections requires an understanding of these mechanics and the implementation of layered defense mechanisms:
+
+1. **Input Sanitization**: Implementing strict controls on what constitutes a valid input and rejecting or flagging potential injections.
+
+2. **Behavioral Analysis**: Continuously monitoring the model's behavior for anomalies that could indicate an injection attack, such as unexpected commands or outputs.
+
+3. **Output Filtering**: Scanning the LLM's outputs for sensitive information or signs of tampering before presenting them to the user.
+
+4. **Model Training**: Incorporating adversarial examples and prompt injection patterns during the training phase to make the model resistant to such attacks.
+
+
 ### Common Examples of Vulnerability
 
 1. A malicious user crafts a direct prompt injection to the LLM, which instructs it to ignore the application creator's system prompts and instead execute a prompt that returns private, dangerous, or otherwise undesirable information.
